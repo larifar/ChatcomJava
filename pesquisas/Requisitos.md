@@ -1,0 +1,5 @@
+- Cliente se conecta a um Servidor
+- Cliente pode enviar mensagens para outros conectados no mesmo servidor
+- Servidor gerencia as mensagens e envia para outros clientes
+- Um cliente só pode se conectar a um servidor
+- O servidor guarda o histórico de mensagens enviadas por dataHora e remetente
