@@ -3,24 +3,24 @@ package unit.model;
 import challenge.model.Server;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTest {
-    @Test
-    public void serverIsOnline(){
-        int port = 2000;
-        Server server = new Server(port);
-        //servidor esta ouvindo porta?
-        Assertions.assertTrue(server.isOnline(port));
-        Assertions.assertFalse(server.isOnline(4000));
-    }
+    @Mock
+    ServerSocket serverSocketMock;
 
     @Test
-    public void serverAcceptsConexionAndReturnSocket(){
-        int port = 3000;
-        Server server = new Server(port);
-        Socket socket = new Socket();
-        Assertions.assertEquals(socket ,server.accepts());
+    public void serverShouldBeOnlineWhenCreated() throws IOException {
+        int port = 2000;
+        ServerSocket serverSocket = new ServerSocket(port);
+        Server server = new Server(serverSocket);
+        //servidor foi criado?
+        int portFalse = 3444;
+        Assertions.assertEquals(serverSocket,server.isOnline());
+        Assertions.assertNotEquals(new ServerSocket(portFalse), server.isOnline());
     }
 }

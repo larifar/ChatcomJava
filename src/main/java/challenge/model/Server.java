@@ -1,13 +1,17 @@
 package challenge.model;
 
-public class Server {
-    private int port;
+import java.io.IOException;
+import java.net.ServerSocket;
 
-    public Server(int port){
-        this.port = port;
+public class Server {
+    private ServerSocket serverSocket;
+
+    public Server(ServerSocket serverSocket) {
+        this.serverSocket = serverSocket;
     }
 
-    public boolean isOnline(int port){
-       return this.port == port;
+    public ServerSocket isOnline() {
+
+        return this.serverSocket;
     }
 }
