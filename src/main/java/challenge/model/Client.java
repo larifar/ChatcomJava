@@ -19,4 +19,16 @@ public class Client {
     public boolean isConnected() {
         return socket.isConnected();
     }
+
+    public boolean send(String message) throws IOException {
+        try {
+            socket.getOutputStream().write(message.getBytes());
+            return true;
+        }catch (RuntimeException e){
+            return false;
+        }
+    }
+    public void close() throws IOException {
+        socket.close();
+    }
 }
