@@ -151,4 +151,18 @@ public class ServerTest {
         }
         server.close();
     }
+
+    @Test
+    public void serverShouldSendMessageToClient() throws IOException {
+        String message = "Mensagem enviada.";
+        int port = 2009;
+        Server server = new Server(new ServerSocket(port));
+        Client client = new Client("localhost", port);
+
+        Thread clientThread = clientThread(client);
+        clientThread.start();
+        server.accept();
+
+        Assertions.assertTrue(server.send(message, client.getSocket()));
+    }
 }

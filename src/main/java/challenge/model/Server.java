@@ -40,7 +40,7 @@ public class Server {
 
     public boolean send(String message, Socket client) throws IOException {
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+            OutputStreamWriter writer = new OutputStreamWriter(client.getOutputStream());
             writer.write(message);
             writer.write("\n");
             writer.flush();

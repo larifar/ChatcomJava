@@ -35,4 +35,8 @@ public class Client {
     public void close() throws IOException {
         socket.close();
     }
+
+    public Socket getSocket() {
+        return this.socket;
+    }
 }
