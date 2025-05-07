@@ -1,6 +1,7 @@
 package challenge.model;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class Client {
@@ -22,7 +23,10 @@ public class Client {
 
     public boolean send(String message) throws IOException {
         try {
-            socket.getOutputStream().write(message.getBytes());
+            OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
+            writer.write(message);
+            writer.write("\n");
+            writer.flush();
             return true;
         }catch (RuntimeException e){
             return false;
