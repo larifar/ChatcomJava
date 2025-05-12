@@ -65,7 +65,7 @@ public class ClientTest {
         Server server = new Server(new ServerSocket(port));
         Thread thread = serverThread(server);
         thread.start();
-        Thread.sleep(100);
+        Thread.sleep(10);
         client.setSocket();
         thread.join();
         BufferedReader reader = new BufferedReader(new InputStreamReader(client.getSocket().getInputStream()));

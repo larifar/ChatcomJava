@@ -8,6 +8,7 @@ public class Client {
     private Socket socket;
     private String ip;
     private int port;
+    private OutputStreamWriter writer;
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
@@ -15,6 +16,7 @@ public class Client {
 
     public void setSocket() throws IOException {
         this.socket = new Socket(this.ip, this.port);
+        this.writer = new OutputStreamWriter(socket.getOutputStream());
     }
 
     public boolean isConnected() {
@@ -23,9 +25,8 @@ public class Client {
 
     public boolean send(String message) throws IOException {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(socket.getOutputStream());
             writer.write(message);
-            writer.write("\n");
+            writer.write("\n\r");
             writer.flush();
             return true;
         }catch (RuntimeException e){

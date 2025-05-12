@@ -38,7 +38,7 @@ public class ServerTest {
     }
 
     @Test
-    public void shouldListenAndAcceptConnection() throws IOException {
+    public void shouldListenAndAcceptConnection() throws IOException{
         int port = 2000;
         String host = "localhost";
         ServerSocket serverSocket = new ServerSocket(port);

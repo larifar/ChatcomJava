@@ -1,7 +1,8 @@
 package challenge.model;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,10 +12,13 @@ import java.util.List;
 public class Server {
     private ServerSocket serverSocket;
     private List<Socket> clients;
+    private OutputStreamWriter writer;
+    private List<BufferedReader> readers;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
         this.clients = new ArrayList<>();
+        this.readers = new ArrayList<>();
     }
 
     public ServerSocket isOnline() {
@@ -24,10 +28,16 @@ public class Server {
     public Socket accept() throws IOException {
         Socket socketClient = serverSocket.accept();
         clients.add(socketClient);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+        readers.add(reader);
+
         return socketClient;
     }
 
-    public void close() throws IOException {
+    public void close() throws IOException{
+        for (BufferedReader reader: readers){
+            reader.close();
+        }
         serverSocket.close();
     }
 
@@ -40,9 +50,9 @@ public class Server {
 
     public boolean send(String message, Socket client) throws IOException {
         try {
-            OutputStreamWriter writer = new OutputStreamWriter(client.getOutputStream());
+            this.writer = new OutputStreamWriter(client.getOutputStream());
             writer.write(message);
-            writer.write("\n");
+            writer.write("\n\r");
             writer.flush();
             return true;
         }catch (RuntimeException e){
