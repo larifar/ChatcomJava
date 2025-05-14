@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ClientListener {
+public class Listener {
     private BufferedReader reader;
     private volatile boolean isOnline;
 
@@ -15,7 +15,15 @@ public class ClientListener {
     private Runnable runnableTask;
     private LinkedBlockingQueue<String> listMessages;
 
-    public ClientListener(BufferedReader reader){
+    private ServerListener serverListener;
+
+    public Listener(BufferedReader reader, ServerListener serverListener){
+        this.reader = reader;
+        this.serverListener = serverListener;
+        this.listMessages = new LinkedBlockingQueue<>();
+    }
+
+    public Listener(BufferedReader reader){
         this.reader = reader;
         this.listMessages = new LinkedBlockingQueue<>();
     }
@@ -42,6 +50,9 @@ public class ClientListener {
     private void addMessage(String msg){
         if (msg != null ){
             listMessages.add(msg);
+            if (serverListener != null){
+                serverListener.addMessage(msg);
+            }
         }
     }
 

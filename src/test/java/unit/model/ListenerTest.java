@@ -1,6 +1,6 @@
 package unit.model;
 
-import challenge.service.ClientListener;
+import challenge.service.Listener;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ClientListenerTest {
+public class ListenerTest {
 
     //ouvir mensagens enviadas do servidor
     @Test
@@ -19,7 +19,7 @@ public class ClientListenerTest {
         BufferedReader reader = new BufferedReader(new InputStreamReader
                 (new ByteArrayInputStream(
                         (message+"\n").getBytes())));
-        ClientListener listener = new ClientListener(reader);
+        Listener listener = new Listener(reader);
         listener.start();
         while(received == null || received.isEmpty()){
             received = listener.getListMessages().poll();
