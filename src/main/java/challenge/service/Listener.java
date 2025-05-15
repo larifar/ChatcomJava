@@ -17,13 +17,13 @@ public class Listener {
 
     private ServerListener serverListener;
 
-    public Listener(BufferedReader reader, ServerListener serverListener){
+    public Listener(BufferedReader reader, ServerListener serverListener) {
         this.reader = reader;
         this.serverListener = serverListener;
         this.listMessages = new LinkedBlockingQueue<>();
     }
 
-    public Listener(BufferedReader reader){
+    public Listener(BufferedReader reader) {
         this.reader = reader;
         this.listMessages = new LinkedBlockingQueue<>();
     }
@@ -35,7 +35,7 @@ public class Listener {
     private Runnable createTask() {
         return () -> {
             String msg = null;
-            while (isOnline){
+            while (isOnline) {
                 try {
                     msg = listen();
                 } catch (IOException e) {
@@ -47,16 +47,16 @@ public class Listener {
         };
     }
 
-    private void addMessage(String msg){
-        if (msg != null ){
+    private void addMessage(String msg) {
+        if (msg != null) {
             listMessages.add(msg);
-            if (serverListener != null){
+            if (serverListener != null) {
                 serverListener.addMessage(msg);
             }
         }
     }
 
-    public void start(){
+    public void start() {
         this.isOnline = true;
         this.executor = Executors.newCachedThreadPool();
         this.runnableTask = createTask();
@@ -73,8 +73,8 @@ public class Listener {
         return reader.readLine();
     }
 
-    private void sleep(){
-        try{
+    private void sleep() {
+        try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             System.out.println("erro sleep");

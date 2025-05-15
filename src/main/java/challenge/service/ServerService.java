@@ -18,22 +18,22 @@ public class ServerService {
         this.serverListener = serverListener;
     }
 
-    public boolean isOnline(){
+    public boolean isOnline() {
         return server.isOnline() && serverListener != null;
     }
 
-    public void start(){
+    public void start() {
         this.executor = Executors.newCachedThreadPool();
         executor.execute(acceptClients());
         executor.execute(awaitMessage());
     }
 
-    public void stopAll(){
-        try{
+    public void stopAll() {
+        try {
             executor.shutdown();
             serverListener.stop();
             server.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -46,25 +46,25 @@ public class ServerService {
         return serverListener;
     }
 
-    private Runnable awaitMessage(){
-        return ()->{
-        try{
-            while (isOnline()){
-                String msg = serverListener.getMessages().take();
-                for (Socket client : server.getClients()){
-                    server.send(msg, client);
+    private Runnable awaitMessage() {
+        return () -> {
+            try {
+                while (isOnline()) {
+                    String msg = serverListener.getMessages().take();
+                    for (Socket client : server.getClients()) {
+                        server.send(msg, client);
+                    }
                 }
+            } catch (InterruptedException | IOException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (InterruptedException | IOException e) {
-            System.out.println(e.getMessage());
-        }
-    };
+        };
     }
 
-    private Runnable acceptClients(){
-        return ()-> {
+    private Runnable acceptClients() {
+        return () -> {
             try {
-                while (isOnline()){
+                while (isOnline()) {
                     server.accept();
                 }
             } catch (IOException e) {
