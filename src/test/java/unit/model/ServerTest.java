@@ -33,8 +33,8 @@ public class ServerTest {
         ServerSocket serverSocket = new ServerSocket(port);
         Server server = new Server(serverSocket);
         int portFalse = 3444;
-        Assertions.assertEquals(serverSocket,server.isOnline());
-        Assertions.assertNotEquals(new ServerSocket(portFalse), server.isOnline());
+        Assertions.assertEquals(serverSocket,server.getServerSocket());
+        Assertions.assertNotEquals(new ServerSocket(portFalse), server.getServerSocket());
     }
 
     @Test

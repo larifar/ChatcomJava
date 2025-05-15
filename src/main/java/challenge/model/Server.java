@@ -21,8 +21,8 @@ public class Server {
         this.readers = new ArrayList<>();
     }
 
-    public ServerSocket isOnline() {
-        return this.serverSocket;
+    public boolean isOnline() {
+        return this.serverSocket != null;
     }
 
     public Socket accept() throws IOException {
@@ -46,6 +46,10 @@ public class Server {
     }
     public List<Socket> getClients(){
         return this.clients;
+    }
+
+    public ServerSocket getServerSocket() {
+        return serverSocket;
     }
 
     public boolean send(String message, Socket client) throws IOException {
